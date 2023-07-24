@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            td {
+                border: 1px solid black;
+                width: 150px;
+                height: 150px;
+                font-size: 30px;
+                text-align: center;
+            }
+            td > a {
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="{{ url_for('teams') }}" method="post">
+            <label for="api1">Team 1:</label>
+            <input type="text" id="api1" name="api1">
+            <label for="boolapi1">API?</label>
+            <input type="checkbox" id="boolapi1" name="boolapi1" value="true">
+            <br>
+            <label for="api2">Team 2:</label>
+            <input type="text" id="api2" name="api2">
+            <label for="boolapi2">API?</label>
+            <input type="checkbox" id="boolapi2" name="boolapi2" value="true">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

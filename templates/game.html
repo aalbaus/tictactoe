@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tic Tac Toe</title>
+        <style>
+            table {
+                border-collapse: collapse;
+            }
+            td {
+                border: 1px solid black;
+                width: 150px;
+                height: 150px;
+                font-size: 30px;
+                text-align: center;
+            }
+            td > a {
+                font-size: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Team 1: {{ teams[0] }} Score: {{ score[0] }}</h1>
+        <h1>Team 2: {{ teams[1] }} Score: {{ score[1] }}</h1>
+        {% if win %}
+            <h1>Team {{ turn+1 }} Wins!</h1>
+        {% elif draw %}
+            <h1>Everyone Wins!</h1>
+        {% else %}
+            <h1>Team {{ turn+1 }}'s Turn!</h1>
+        {% endif %}
+        <table>
+            {% for i in range(3) %}
+                <tr>
+                    {% for j in range(3) %}
+                        <td>
+                            {% if game[(i*3)+j] == 1 %}
+                                <b>X</b>
+                            {% elif game[(i*3)+j] == 2 %}
+                                <b>O</b>
+                            {% else %}
+                                {% if win == false %}
+                                    <a href="{{ url_for('play', move=(i*3)+j) }}">Play here.</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <br>
+        <form action="{{ url_for('reset') }}">
+            <input type="submit" value="NEW GAME" />
+        </form>
+        <br>
+        <form action="{{ url_for('teams') }}">
+            <input type="submit" value="NEW TEAMS" />
+        </form>
+    </body>
+</html>
