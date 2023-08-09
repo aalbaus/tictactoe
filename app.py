@@ -46,7 +46,7 @@ def reset():
 
 @app.route("/play/<int:move>")
 def play(move):
-    if session["board"][move] == 0:
+    if isinstance(move, int) and move >= 0 and move < 9 and session["board"][move] == 0:
         session["board"][move] = session["symbols"][session["turn"]]
     else:
         session["turn"] = not session["turn"]
@@ -91,9 +91,16 @@ def retrievemove(api, board):
     boardq = "?board=" + str(board[0])
     for b in board[1:]:
         boardq += "&board=" + str(b)
+    #if api.startswith("http://"):
+    #    url = api + boardq
+    #else:
     url = "http://" + api + boardq
-    m = urllib.request.urlopen(url).read()
-    return int(json.loads(m))
+    try:
+        m = urllib.request.urlopen(url, timeout=10).read()
+        return int(json.loads(m))
+    except Exception as e:
+        print(e)
+        return 9
 
 if __name__ == "__main__":
     app.run()

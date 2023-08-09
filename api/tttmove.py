@@ -30,7 +30,11 @@ async def minmaxmove(board: List[int] = Query(...)):
     else:
         player = 1
     print(player)
-    m = get_best_move(board, player)
+    if board.count(1) == 0:
+        m = 0
+    else:
+        m = get_best_move(board, player)
+    print(m)
     return m
 
 def check_winner(board, player):
