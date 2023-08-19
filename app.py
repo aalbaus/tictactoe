@@ -52,6 +52,7 @@ def play(move):
         session["turn"] = not session["turn"]
         session["win"] = True
         session["score"][session["turn"]] += 100
+        return redirect(url_for("index"))
     if checkwin(session["board"],session["symbols"][session["turn"]]):
         session["win"] = True
         session["score"][session["turn"]] += 100
