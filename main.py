@@ -20,6 +20,10 @@ async def make_moves(board: List[int] = Query(...)):
     print(board)
 
     team = check_our_team(board)
+    if sum(board) == 0:
+        return first_move()
+    # if sum(board) == 1:
+    #     return first_response()
 
     move = endgame(board, team)
     if move is not None:
@@ -52,7 +56,32 @@ def endgame(board, team):
             value = [x for x in line if board[x-1]==0][0]-1
             return value
 
-def do_the_algo(board, team):
-    if board[0]!= 0:
-        return 2
+def first_move():
     return 0
+
+# def first_response(board, team):
+#     return 
+
+def do_the_algo(board, team):
+    their_team = [1, 2][team%2]
+    open_spots = [x+1 for x in range(9) if board[x]==0]
+    print(open_spots)
+    spot_score = [0 for x in open_spots]
+    for i, each in enumerate(open_spots):
+        win_opportunities = 0
+        for line in WIN_LINES:
+            if each+1 in line:
+                line_status = [board[x-1] for x in line]
+                if their_team in line_status:
+                    pass
+                elif team in line_status:
+                    win_opportunities += 1
+                elif sum(line_status) == 0:
+                    win_opportunities += 0.5
+                else:
+                    print("this shouldn't happen")
+        spot_score[i] = win_opportunities
+    print(open_spots, spot_score)
+    chosen_pos = open_spots[spot_score.index(max(spot_score))]
+    print(chosen_pos)
+    return chosen_pos
