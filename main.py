@@ -65,12 +65,13 @@ def first_move():
 def do_the_algo(board, team):
     their_team = [1, 2][team%2]
     open_spots = [x+1 for x in range(9) if board[x]==0]
+    blocked_spots = [x+1 for x in range(9) if board[x]!=0]
     print(open_spots)
     spot_score = [0 for x in open_spots]
     for i, each in enumerate(open_spots):
         win_opportunities = 0
         for line in WIN_LINES:
-            if each+1 in line:
+            if each in line:
                 line_status = [board[x-1] for x in line]
                 if their_team in line_status:
                     pass
@@ -82,6 +83,6 @@ def do_the_algo(board, team):
                     print("this shouldn't happen")
         spot_score[i] = win_opportunities
     print(open_spots, spot_score)
-    chosen_pos = open_spots[spot_score.index(max(spot_score))]
+    chosen_pos = open_spots[spot_score.index(max(spot_score))]-1
     print(chosen_pos)
     return chosen_pos
